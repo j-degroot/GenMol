@@ -27,9 +27,9 @@ raytune_callback = TuneReportCheckpointCallback(
 
 
 def main():
-    adenosine_star = True
-    NUM_NODE_FEATURES = 9
-    NUM_EDGE_FEATURES = 3
+    adenosine_star = False
+    NUM_NODE_FEATURES = 3
+    NUM_EDGE_FEATURES = 1  # at least 1
     max_epochs = 200
     n_samples = 100
     max_t_per_trial = 1000
@@ -40,9 +40,11 @@ def main():
 
     if adenosine_star:
         dataset = MoleculeDataset(root=os.getcwd() + '/data/adenosine', filename='human_adenosine_ligands',
+                                  num_node_features=NUM_NODE_FEATURES, num_edge_features=NUM_EDGE_FEATURES,
                                   prot_target_encoding=prot_target_encoding)
     else:
         dataset = MoleculeDataset(root=os.getcwd() + '/data/a2aar', filename='human_a2aar_ligands',
+                                  num_node_features=NUM_NODE_FEATURES, num_edge_features=NUM_EDGE_FEATURES,
                                   prot_target_encoding=None)
 
     train_indices, test_indices = train_test_split(np.arange(dataset.len()), train_size=0.8, random_state=0)
@@ -63,7 +65,7 @@ def main():
         'lr': 3e-4,  # learning rate
         'hidden': 256,  # embedding/hidden dimensions
         'layer_type': GAT,
-        'n_layers': 3,
+        'n_layers': 5,
         'pool': 'GlobalAttention',
         'v2': True,
         'input_heads': 1,

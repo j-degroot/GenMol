@@ -5,3 +5,6 @@ __pycache__
 lightning_logs
 /data/a2aar/processed/
 /data/adenosine/processed/
+.idea/workspace.xml
+pretrain_best_config.pt
+model_result_big.pkl

@@ -6,7 +6,7 @@ from rdkit.Chem import PandasTools
 from torch import seed
 
 import utils
-from utils.mol2fingerprint import calc_fps
+from utils.encode_ligand import calc_fps
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from xgboost import XGBRegressor

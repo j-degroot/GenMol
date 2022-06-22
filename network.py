@@ -14,21 +14,35 @@ from torch_geometric.nn.glob import GlobalAttention, global_mean_pool
 from torch_geometric.nn.conv import GATConv
 from torch_geometric.data import Data
 from torch_geometric.nn.models import GIN, GAT, PNA
-# from utils.mol2fingerprint import calc_fps
-# from rdkit import Chem
-# from xgboost import XGBRegressor
+from utils.mol2fingerprint import calc_fps
+from rdkit import Chem
+from xgboost import XGBRegressor
+
+def pred_xgb(smiles_list):
+    model =XGBRegressor()
+    model.load_model('temp_xgb.json')
+    mols = [Chem.MolFromSmiles(smiles) for smiles in smiles_list]
+    fps = calc_fps(mols)
+    preds = model.predict(fps)
+    # if len(smiles_list) < batch_size:
+        # preds = np.concatenate((preds, np.zeros((batch_size-len(smiles_list),))), axis=0)
+    return preds
+
+from utils.encode_ligand import calc_fps
+from rdkit import Chem
+from xgboost import XGBRegressor
 
 
-# def pred_xgb(smiles_list):
-#     model =XGBRegressor()
-#     model.load_model('temp_xgb.json')
-#     mols = [Chem.MolFromSmiles(smiles) for smiles in smiles_list]
-#     fps = calc_fps(mols)
-#     preds = model.predict(fps)
-#     # if len(smiles_list) < batch_size:
-#         # preds = np.concatenate((preds, np.zeros((batch_size-len(smiles_list),))), axis=0)
-#     return preds
-        
+def pred_xgb(smiles_list,batch_size=64):
+    model =XGBRegressor()
+    model.load_model('temp_xgb.json')
+    mols = [Chem.MolFromSmiles(smiles) for smiles in smiles_list]
+    fps = calc_fps(mols)
+    preds = model.predict(fps)
+    if len(smiles_list) < batch_size:
+        preds = np.concatenate((preds, np.zeros((batch_size-len(smiles_list),))), axis=0)
+    return preds
+
 class GNN(pl.LightningModule):
     def __init__(self, config, data_dir=None, name='GNN'):
         super(GNN, self).__init__()
@@ -45,7 +59,7 @@ class GNN(pl.LightningModule):
         dim = self.hidden_size
 
         # GIN and GraphSAGE do not include edge attr
-        self.gnn = self.layer_type(num_features,dim, num_layers=self.num_layers,
+        self.gnn = self.layer_type(num_features,dim, num_layers=self.num_layers, edge_dim=self.edge_dim,
                                    norm=torch.nn.BatchNorm1d(dim))
         if config['active_layer'] == 'first':
             self.last_layer = self.gnn._modules['convs'][0]
@@ -82,8 +96,8 @@ class GNN(pl.LightningModule):
         self.emb_f = None
 
     def forward(self, graphs: Data):
-        x, edge_index, batch = graphs.x, graphs.edge_index, graphs.batch
-        x = F.relu(self.gnn(x, edge_index))
+        x, edge_index, edge_attr, batch = graphs.x, graphs.edge_index, graphs.edge_attr, graphs.batch
+        x = F.relu(self.gnn(x, edge_index, edge_attr))
         self.emb_f = self.pool(x, batch)
         x = F.relu(self.fc1(self.emb_f))
         x = F.dropout(x, p=0.5, training=self.training)

@@ -4,11 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="4390a5d9-fb49-4eb9-9777-d932a5d9e9cb" name="Changes" comment="changed memory management through line in main.py">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/final_GNN" beforeDir="false" afterPath="$PROJECT_DIR$/models/final_GNN" afterDir="false" />
+=======
+    <list default="true" id="4390a5d9-fb49-4eb9-9777-d932a5d9e9cb" name="Changes" comment="Moved hyperparameter optimization code to file of the same name to make running easier, see parameter list for how to use.">
+      <change afterPath="$PROJECT_DIR$/debug.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GenMol.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GenMol.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +38,6 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SET_USER_NAME_GLOBALLY" value="false" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/anaconda3/envs/ADL/Lib/site-packages/ignite/engine/engine.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -143,6 +148,8 @@
       <workItem from="1651590907159" duration="433000" />
       <workItem from="1651591599431" duration="239000" />
       <workItem from="1651660891804" duration="642000" />
+      <workItem from="1655648210362" duration="33000" />
+      <workItem from="1655648273972" duration="2788000" />
     </task>
     <task id="LOCAL-00001" summary="recent update">
       <created>1649860827868</created>
